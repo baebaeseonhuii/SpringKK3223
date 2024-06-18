@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 public class WeatherDAO {
 
 	public List<WeatherDTO> getList() throws Exception {
-		System.out.println("DAO list");
+
 		File file = new File("C:\\study\\weather.txt");
 		FileReader fr = new FileReader(file); // 읽는 객체
 		BufferedReader br = new BufferedReader(fr); // 연결해주는 애

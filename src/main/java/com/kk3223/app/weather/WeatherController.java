@@ -17,7 +17,6 @@ public class WeatherController {
 	@RequestMapping("/weather/list")
 	public String getList(HttpServletRequest request) throws Exception {
 
-		System.out.println("list 가져오기");
 		List<WeatherDTO> weatherList = weatherService.getList();
 		request.setAttribute("weatherList", weatherList);
 		return "weather/list";
