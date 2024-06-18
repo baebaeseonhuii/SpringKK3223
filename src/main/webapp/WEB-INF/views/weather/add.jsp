@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="/resources/css/tables.css" rel="stylesheet">
 </head>
 <body>
 <h1>날씨 정보 한개 추가</h1>
