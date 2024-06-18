@@ -28,13 +28,30 @@ public class WeatherController {
 	}
 
 	@RequestMapping("/weather/detail")
-	public String getDetail() {
-		return "weather/detail";
+	public String getDetail(HttpServletRequest request) {
+		WeatherDTO wDTO = new WeatherDTO();
+		wDTO.setNum(Long.parseLong(request.getParameter("num")));
+		wDTO = weatherService.getDetail(wDTO);
+		if (wDTO != null) {
+			request.setAttribute("weatherDetail", wDTO);
+			return "weather/detail";
+		} else {
+			request.setAttribute("messages", "정보가 없습니다");
+			return "commons/messages";
+		}
 	}
 
 	@RequestMapping("/weather/delete")
 	public String deleteWeather() {
-		return "redirect:/list";
+		return "redirect:/weather/list";
+	}
+
+	@RequestMapping("/weather/delete")
+	public String deleteWeather2(HttpServletRequest request) {
+		WeatherDTO wDTO = new WeatherDTO();
+		wDTO.setNum(Long.parseLong(request.getParameter("num")));
+		weatherService.deleteWeather(wDTO);
+		return "redirect:/weather/list";
 	}
 
 	@RequestMapping(value = "/weather/add", method = RequestMethod.GET)
@@ -44,19 +61,44 @@ public class WeatherController {
 	}
 
 	@RequestMapping(value = "/weather/add", method = RequestMethod.POST)
-	public String addWeather2() {
-
-		return "redirect:/list";
+	public String addWeather2(HttpServletRequest request) throws Exception {
+		WeatherDTO weatherDTO = new WeatherDTO();
+		String city = request.getParameter("city");
+		double gion = Double.parseDouble(request.getParameter("gion"));
+		String status = request.getParameter("status");
+		int humidity = Integer.parseInt(request.getParameter("humidity"));
+		weatherDTO.setCity(city);
+		weatherDTO.setGion(gion);
+		weatherDTO.setStatus(status);
+		weatherDTO.setHumidity(humidity);
+		weatherService.addWeather(weatherDTO);
+		List<WeatherDTO> weatherList = weatherService.getList();
+		request.setAttribute("weatherList", weatherList);
+		return "redirect:/weather/list";
 	}
 
 	@RequestMapping(value = "/weather/update", method = RequestMethod.GET)
-	public String updateWeather() {
+	public String updateWeather(HttpServletRequest request) {
+		WeatherDTO weatherDTO = new WeatherDTO();
+		weatherDTO.setNum(Long.parseLong(request.getParameter("num")));
+		weatherDTO = weatherService.getDetail(weatherDTO);
+		request.setAttribute("weatherDTO", weatherDTO);
 		return "weather/update";
 	}
 
 	@RequestMapping(value = "/weather/update", method = RequestMethod.POST)
-	public String updateWeather2() {
-		return "redirect:/list";
+	public String updateWeather2(HttpServletRequest request) {
+		WeatherDTO weatherDTO = new WeatherDTO();
+		String city = request.getParameter("city");
+		double gion = Double.parseDouble(request.getParameter("gion"));
+		String status = request.getParameter("status");
+		int humidity = Integer.parseInt(request.getParameter("humidity"));
+		weatherDTO.setCity(city);
+		weatherDTO.setGion(gion);
+		weatherDTO.setStatus(status);
+		weatherDTO.setHumidity(humidity);
+		weatherService.update(weatherDTO);
+		return "redirect:/weather/list";
 	}
 
 }
