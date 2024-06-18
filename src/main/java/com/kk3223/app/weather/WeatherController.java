@@ -41,12 +41,12 @@ public class WeatherController {
 		}
 	}
 
-	@RequestMapping("/weather/delete")
+	@RequestMapping(value = "/weather/delete", method = RequestMethod.GET)
 	public String deleteWeather() {
 		return "redirect:/weather/list";
 	}
 
-	@RequestMapping("/weather/delete")
+	@RequestMapping(value = "/weather/delete", method = RequestMethod.POST)
 	public String deleteWeather2(HttpServletRequest request) {
 		WeatherDTO wDTO = new WeatherDTO();
 		wDTO.setNum(Long.parseLong(request.getParameter("num")));
@@ -89,6 +89,7 @@ public class WeatherController {
 	@RequestMapping(value = "/weather/update", method = RequestMethod.POST)
 	public String updateWeather2(HttpServletRequest request) {
 		WeatherDTO weatherDTO = new WeatherDTO();
+		weatherDTO.setNum(Long.parseLong(request.getParameter("num")));
 		String city = request.getParameter("city");
 		double gion = Double.parseDouble(request.getParameter("gion"));
 		String status = request.getParameter("status");
