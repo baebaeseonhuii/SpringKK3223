@@ -1,5 +1,6 @@
 package com.kk3223.app.weather;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ public class WeatherController {
 
 	@RequestMapping("/weather/list")
 	public String getList(HttpServletRequest request) throws Exception {
-
+		request.setCharacterEncoding("UTF-8");
 		List<WeatherDTO> weatherList = weatherService.getList();
 		request.setAttribute("weatherList", weatherList);
 		return "weather/list";
@@ -32,6 +33,12 @@ public class WeatherController {
 		WeatherDTO wDTO = new WeatherDTO();
 		wDTO.setNum(Long.parseLong(request.getParameter("num")));
 		wDTO = weatherService.getDetail(wDTO);
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (wDTO != null) {
 			request.setAttribute("weatherDetail", wDTO);
 			return "weather/detail";
@@ -73,6 +80,8 @@ public class WeatherController {
 		weatherDTO.setHumidity(humidity);
 		weatherService.addWeather(weatherDTO);
 		List<WeatherDTO> weatherList = weatherService.getList();
+
+		request.setCharacterEncoding("UTF-8");
 		request.setAttribute("weatherList", weatherList);
 		return "redirect:/weather/list";
 	}
@@ -82,12 +91,24 @@ public class WeatherController {
 		WeatherDTO weatherDTO = new WeatherDTO();
 		weatherDTO.setNum(Long.parseLong(request.getParameter("num")));
 		weatherDTO = weatherService.getDetail(weatherDTO);
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		request.setAttribute("weatherDTO", weatherDTO);
 		return "weather/update";
 	}
 
 	@RequestMapping(value = "/weather/update", method = RequestMethod.POST)
 	public String updateWeather2(HttpServletRequest request) {
+		try {
+			request.setCharacterEncoding("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		WeatherDTO weatherDTO = new WeatherDTO();
 		weatherDTO.setNum(Long.parseLong(request.getParameter("num")));
 		String city = request.getParameter("city");
