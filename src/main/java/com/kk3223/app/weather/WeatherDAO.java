@@ -25,8 +25,8 @@ public class WeatherDAO {
 			if (s == null) {
 				break;
 			}
-			s = s.replace(",", "-");
-			StringTokenizer st = new StringTokenizer(s, "-");
+			s = s.replace("-", ",");
+			StringTokenizer st = new StringTokenizer(s, ",");
 			WeatherDTO dto = new WeatherDTO();
 
 			while (st.hasMoreTokens()) {
@@ -41,6 +41,19 @@ public class WeatherDAO {
 		br.close();
 		fr.close();
 		return ar;
+	}
+
+	public WeatherDTO getDetail(WeatherDTO weatherDTO) throws Exception {
+		List<WeatherDTO> ar = this.getList();
+		WeatherDTO result = null;
+		for (WeatherDTO w : ar) {
+			if (w.getNum() == weatherDTO.getNum()) {
+				result = w;
+				break;
+			}
+		}
+
+		return result;
 	}
 
 }
