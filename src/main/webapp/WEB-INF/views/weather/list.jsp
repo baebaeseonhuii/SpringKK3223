@@ -36,8 +36,8 @@
 
 
 	</table>
-	<div>
-		<a href="./add">날씨 등록</a>
+	<div class="addButton">
+		<a href="./add">ADD WEATHER</a>
 	</div>
 
 </body>

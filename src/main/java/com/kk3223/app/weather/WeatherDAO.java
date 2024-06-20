@@ -132,6 +132,7 @@ public class WeatherDAO {
 			fw.write(s + "\n");
 		}
 
+		br.close();
 		fw.close();
 
 	}
